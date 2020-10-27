@@ -79,8 +79,14 @@ class ActivationGeneratorBase(ActivationGeneratorInterface):
             tf.compat.v1.logging.info('Loaded {} shape {}'.format(
                 acts_path, acts[concept][bottleneck_name].shape))
         else:
-          acts[concept][bottleneck_name] = self.get_activations_for_concept(
-              concept, bottleneck_name)
+          # acts[concept][bottleneck_name] = self.get_activations_for_concept(
+          #     concept, bottleneck_name)
+          act = self.get_activations_for_concept(
+                        concept, bottleneck_name)
+          act= act.reshape((act.shape[0], act.shape[1]*act.shape[2], act.shape[3]))
+          act = np.matmul(act,np.transpose(act, (0,2,1)))
+          print(act.shape)
+
           if acts_path:
             tf.compat.v1.logging.info(
                 '{} does not exist, Making one...'.format(acts_path))
