@@ -83,8 +83,10 @@ class ActivationGeneratorBase(ActivationGeneratorInterface):
           #     concept, bottleneck_name)
           act = self.get_activations_for_concept(
                         concept, bottleneck_name)
+          print(act.shape)
           act= act.reshape((act.shape[0], act.shape[1]*act.shape[2], act.shape[3]))
-          act = np.matmul(act,np.transpose(act, (0,2,1)))
+          print(act.shape)
+          acts[concept][bottleneck_name] = np.matmul(act,np.transpose(act, (0,2,1)))
           print(act.shape)
 
           if acts_path:
